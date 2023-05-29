@@ -28,29 +28,28 @@ def gcd(a, b):
 
 def factorize(n):
     factors = []
-    while n > 1:
-        if is_prime(n):
-            factors.append(n)
-            break
-        d = pollards_rho(n)
-        factors.append(d)
-        n //= d
-    factors.sort()
-    return f"{n}={factors[0]}*{n//factors[0]}"
+    while n % 2 == 0:
+        factors.append(2)
+        n //= 2
+    while n % 3 == 0:
+        factors.append(3)
+        n //= 3
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
     i = 5
     while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+        while n % (i + 2) == 0:
+            factors.append(i + 2)
+            n //= i + 2
         i += 6
-    return True
+
+    if n > 1:
+        factors.append(n)
+
+    factors.sort()
+    return f"{n}={factors[0]}*{n//factors[0]}"
 
 def main(file_path):
     with open(file_path, 'r') as file:
@@ -75,7 +74,9 @@ if __name__ == '__main__':
     end_time = time.time()
 
     elapsed_time = end_time - start_time
+    user_time = time.process_time()
+    system_time = (elapsed_time - user_time) * -1
 
     print(f"\nreal    {elapsed_time//60:.0f}m{elapsed_time%60:.3f}s")
-    print(f"user    {time.process_time():.3f}s")
-    print(f"sys     {elapsed_time - time.process_time():.3f}s")
+    print(f"user    {user_time//60:.0f}m{user_time%60:.3f}s")
+    print(f"sys     {system_time//60:.0f}m{system_time%60:.3f}s")
