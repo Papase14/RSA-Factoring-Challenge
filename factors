@@ -1,27 +1,41 @@
-#!/usr/bin/python3
-import sys
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
-def factorize(n):
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return i, n // i
-    return None
-
-
-def process_file(file_path):
-    with open(file_path, 'r') as file:
-        for line in file:
-            n = int(line.strip())
-            factors = factorize(n)
-            if factors:
-                p, q = factors
-                print(f"{n} = {p} * {q}")
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        sys.exit(1)
+void factorize(int n)
+{
+    int i, factor1, factor2;
     
-    file_path = sys.argv[1]
-    process_file(file_path)
+    for (i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            factor1 = i;
+            factor2 = n / i;
+            printf("%d = %d * %d\n", n, factor1, factor2);
+            return;
+        }
+    }
+    
+    printf("%d is a prime number\n", n);
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc != 2) {
+        printf("Usage: factors <file>\n");
+        return 1;
+    }
+    
+    FILE *file = fopen(argv[1], "r");
+    if (file == NULL) {
+        printf("Failed to open the file\n");
+        return 1;
+    }
+    
+    int number;
+    while (fscanf(file, "%d", &number) != EOF) {
+        factorize(number);
+    }
+    
+    fclose(file);
+    return 0;
+}
