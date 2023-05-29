@@ -13,11 +13,8 @@ def main(file_path):
         numbers = file.read().splitlines()
 
     for number in numbers:
-        try:
-            result = factorize(int(number))
-            print(result)
-        except ValueError:
-            print(f"Invalid input: {number}")
+        result = factorize(int(number))
+        print(result)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
