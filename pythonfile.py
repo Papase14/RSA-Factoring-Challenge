@@ -3,64 +3,19 @@
 import sys
 import time
 
-def pollards_rho(n):
-    if n % 2 == 0:
-        return 2
-
-    x = 2
-    y = 2
-    d = 1
-
-    def f(x):
-        return (x ** 2 + 1) % n
-
-    while d == 1:
-        x = f(x)
-        y = f(f(y))
-        d = gcd(abs(x - y), n)
-
-    return d
-
-def gcd(a, b):
-    while b != 0:
-        a, b = b, a % b
-    return a
-
 def factorize(n):
-    factors = []
-    while n % 2 == 0:
-        factors.append(2)
-        n //= 2
-    while n % 3 == 0:
-        factors.append(3)
-        n //= 3
-
-    i = 5
-    while i * i <= n:
-        while n % i == 0:
-            factors.append(i)
-            n //= i
-        while n % (i + 2) == 0:
-            factors.append(i + 2)
-            n //= i + 2
-        i += 6
-
-    if n > 1:
-        factors.append(n)
-
-    factors.sort()
-    return f"{n}={factors[0]}*{n//factors[0]}"
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return f"{n}={i}*{n//i}"
+    return f"{n} is a prime number"
 
 def main(file_path):
     with open(file_path, 'r') as file:
         numbers = file.read().splitlines()
 
     for number in numbers:
-        try:
-            result = factorize(int(number))
-            print(result)
-        except ValueError:
-            print(f"Invalid input: {number}")
+        result = factorize(int(number))
+        print(result)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
