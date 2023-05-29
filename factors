@@ -26,13 +26,15 @@ int main(int argc, char *argv[])
     }
     
     FILE *file = fopen(argv[1], "r");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         printf("Failed to open the file\n");
         return 1;
     }
     
     int number;
-    while (fscanf(file, "%d", &number) != EOF) {
+    while (fscanf(file, "%d", &number) != EOF)
+    {
         factorize(number);
     }
     
