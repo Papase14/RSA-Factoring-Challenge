@@ -11,6 +11,7 @@ def factorize(n):
 def main(file_path):
     with open(file_path, 'r') as file:
         numbers = file.read().splitlines()
+
     for number in numbers:
         try:
             result = factorize(int(number))
