@@ -13,8 +13,11 @@ def main(file_path):
         numbers = file.read().splitlines()
 
     for number in numbers:
-        result = factorize(int(number))
-        print(result)
+        try:
+            result = factorize(int(number))
+            print(result)
+        except ValueError:
+            print(f"Invalid input: {number}")
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -23,3 +26,4 @@ if __name__ == '__main__':
 
     file_path = sys.argv[1]
     main(file_path)
+
