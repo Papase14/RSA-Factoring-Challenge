@@ -12,7 +12,6 @@ def factorize(n):
 def main(file_path):
     with open(file_path, 'r') as file:
         numbers = file.read().splitlines()
-
     for number in numbers:
         try:
             result = factorize(int(number))
@@ -26,15 +25,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     file_path = sys.argv[1]
-
-    start_time = time.time()
     main(file_path)
-    end_time = time.time()
-
-    elapsed_time = end_time - start_time
-    user_time = time.process_time()
-    system_time = elapsed_time - user_time
-
-    print(f"\nreal    {elapsed_time:.3f}s")
-    print(f"user    {user_time:.3f}s")
-    print(f"sys     {system_time:.3f}s")
