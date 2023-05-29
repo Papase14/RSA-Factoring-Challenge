@@ -1,10 +1,27 @@
-#!/usr/bin/env bash
-# read from file given as argv[1] ($1) and print factors for each num in file
+#!/usr/bin/python3
+import sys
 
-FILE=$1
+def factorize(n):
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return i, n // i
+    return None
 
-while read NUM
-do
-    factors=($(factor $NUM))
-    echo "$NUM=$(($NUM/${factors[1]}))*${factors[1]}"
-done < $FILE
+
+def process_file(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            n = int(line.strip())
+            factors = factorize(n)
+            if factors:
+                p, q = factors
+                print(f"{n} = {p} * {q}")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        sys.exit(1)
+    
+    file_path = sys.argv[1]
+    process_file(file_path)
